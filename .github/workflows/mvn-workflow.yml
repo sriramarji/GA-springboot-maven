@@ -16,10 +16,13 @@ jobs:
         with:
          java-version: '17'
          distribution: 'oracle' 
-      - run: mvn --batch-mode --update-snapshots verify
+      - name: Install Maven
+        run: sudo apt-get install -y maven
+      - name: Build with Maven
+        run: mvn clean install
       - run: mkdir test && cp target/*.war test
-      -  name: Upload GitHub Pages artifact
-         uses: actions/upload-pages-artifact@v3.0.1
-         with:
-           name: java Package
-           path: test
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          name: java Package
+          path: test
